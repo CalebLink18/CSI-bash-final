@@ -18,12 +18,7 @@ fi
 #filters log entries what is inside of IOC.txt
 while IFS= read -r ioc; do
 	if [[ -n "$ioc" ]]; then
-		mapfile -t output < <(grep -F "$ioc" "$log_file")
+		grep -F "$ioc" "$log_file" >> report.txt
 	fi
 done < "$ioc_file"
-
-for line in "${output[@]}"; do
-	echo "$line"
-done
-
 }
