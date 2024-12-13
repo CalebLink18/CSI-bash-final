@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function IOCreportWebsite() {
+
+output="report.html"
+
+echo "<html>" > "$output"
+echo "<head><title>Report</title></head>" >> "$output"
+echo "<body>" >> "$output"
+echo "<h1>Report Table</h1>" >> "$output"
+echo "<table border='1'>" >> "$output"
+
+while IFS= read -r line; do
+	IFS=' ' read -r -a fields <<< "$line"
+	echo "<tr>" >> "$output"
+	for field in "${fields[@]}"; do
+		echo "<td>$field</td>" >> "$output"
+	done
+	echo "</tr>" >> "$output"
+done < "$1"
+
+echo "</table>" >> "$output"
+echo "</body>" >> "$output"
+echo "</html>" >> "$output"
+
+mv ./ /var/www/html/
+
+}
